@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "synthetic-page-generator"
+version = "0.1.0"
+description = "Synthetic Arabic document pages with exact layout ground truth: every region's box, type and reading order."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+# Pillow must have Raqm (HarfBuzz shaping); without it Arabic letters are drawn
+# unjoined. The PyPI wheels have it — `python -c "from PIL import features;
+# print(features.check('raqm'))"` says so.
+dependencies = ["numpy", "Pillow>=10", "fonttools", "scipy"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/g3ida/synthetic-page-generator"
+
+[project.scripts]
+synthetic-pages = "synthetic_page_generator.cli:main"
+synthetic-pages-coco = "synthetic_page_generator.coco:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint.per-file-ignores]
+# The layout code's own compact style: short loop names and paired statements.
+"src/synthetic_page_generator/generator.py" = ["E741", "E702"]

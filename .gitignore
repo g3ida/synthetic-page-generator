@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv*/
+.pytest_cache/
+.ruff_cache/
+# What you generate, and the fonts you fetch.
+out/
+fonts/
